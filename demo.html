@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+  <link rel="stylesheet" type="text/css" href="css/demo.css">
+</head>
+
+<body>
+  <button>左对齐</button>
+  <button>右对齐</button>
+  <button>上对齐</button>
+  <button>下对齐</button>
+  <button>水平居中对齐</button>
+  <button>垂直居中对齐</button>
+  <button>水平等间距分布</button>
+  <button>垂直等间距分布</button>
+  <div id='app' class='main'>
+    <div id='box1' class='box'>box1</div>
+    <div id='box2' class='box'>box2</div>
+    <div id='box3' class='box'>box3</div>
+    <div id='box4' class='box'>box4</div>
+  </div>
+</body>
+</html>
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/MultiSelection.js"></script>
+<script type="text/javascript" src="js/multiAlign.js"></script>
+<script type="text/javascript" src="js/demo.js"></script>
+<script type="text/javascript">
+window.onload = function () {
+  var sel = new MultiSelection('app', 'box', 'sel', overFunc)
+  sel.init()
+}
+</script>
