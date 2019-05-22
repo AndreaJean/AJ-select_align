@@ -17,17 +17,17 @@ var sel = new MultiSelection(boxId, itemClassName, selClassName, overFunc, maxIn
 ```JavaScript
 sel.init()
 ```
-* @param {String} boxId 遮罩层的ID
-* @param {String} itemClassName 选项的CLASS
-* @param {String} selClassName 选项选中后添加的样式CLASS
-* @param {Function} overFunc 框选结束后的回调函数
-* @param {Number} maxIndex 框选过程中，遮罩层临时提高的层级值，默认为999
+* boxId {String} 遮罩层的ID
+* itemClassName {String} 选项的CLASS
+* selClassName {String} 选项选中后添加的样式CLASS
+* overFunc {Function} 框选结束后的回调函数
+* maxIndex {Number} 框选过程中，遮罩层临时提高的层级值，默认为999
 
 
 ## 对齐调用
 ```JavaScript
 multiAlign(idList, direction, overFunc)
 ```
-* @param {Array} idList 目标DOM元素的ID
-* @param {String} direction 调整位置的方式，可选值：'top'，'middle'，'bottom'，'left'，'center'，'right'，'horizontal'，'vertical'
-* @param {Function} overFunc 调整位置后的回调函数
+* idList {Array} 目标DOM元素的ID
+* direction {String} 调整位置的方式，可选值：'top'，'middle'，'bottom'，'left'，'center'，'right'，'horizontal'，'vertical'
+* overFunc {Function} 调整位置后的回调函数
