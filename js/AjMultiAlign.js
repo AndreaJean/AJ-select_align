@@ -5,16 +5,16 @@
  * @param {Function} overFunc 调整位置后的回调函数
  */
 
-var multiAlign = function (idList, direction, overFunc) {
+let AjMultiAlign = function (idList, direction, overFunc) {
   if (idList.length < 2) {
     return
   }
   if (idList.length === 2 && ['horizontal', 'vertical'].includes(direction)) {
     return
   }
-  var rects = calculateInfo()
-  var standard = getStandard()
-  var spacing = calculateSpacing()
+  let rects = calculateInfo()
+  let standard = getStandard()
+  let spacing = calculateSpacing()
   if (['horizontal', 'vertical'].includes(direction)) {
     adjustSpacing()
   } else {
@@ -26,10 +26,10 @@ var multiAlign = function (idList, direction, overFunc) {
 
   // 获取所有对象的位置信息，回调中返回
   function getPosition () {
-    var items = []
+    let items = []
     idList.forEach(e => {
-      var dom = document.getElementById(e)
-      var obj = {
+      let dom = document.getElementById(e)
+      let obj = {
         id: e,
         top: dom.offsetTop,
         left: dom.offsetLeft
@@ -40,8 +40,8 @@ var multiAlign = function (idList, direction, overFunc) {
   }
   // 调整间距
   function adjustSpacing () {
-    var top = rects[0].top
-    var left = rects[0].left
+    let top = rects[0].top
+    let left = rects[0].left
     rects.forEach((e, i) => {
       if (i === 0) {
         return false
@@ -60,7 +60,7 @@ var multiAlign = function (idList, direction, overFunc) {
   }
   // 计算等间距分散的间距值
   function calculateSpacing () {
-    var sum = {
+    let sum = {
       horizontal: getStandard('right') - getStandard('left'),
       vertical: getStandard('bottom') - getStandard('top'),
       width: 0,
@@ -70,7 +70,7 @@ var multiAlign = function (idList, direction, overFunc) {
       sum.width += e.width
       sum.height += e.height
     })
-    var gap = {
+    let gap = {
       horizontal: (sum.horizontal - sum.width) / (rects.length - 1),
       vertical: (sum.vertical - sum.height) / (rects.length - 1)
     }
@@ -103,8 +103,8 @@ var multiAlign = function (idList, direction, overFunc) {
   }
   // 获取对齐的标准值
   function getStandard (str) {
-    var target = rects[0]
-    var type = str || direction
+    let target = rects[0]
+    let type = str || direction
     if (type === 'left' || type === 'top') {
       rects.forEach(e => {
         if (e[type] < target[type]) {
@@ -122,10 +122,10 @@ var multiAlign = function (idList, direction, overFunc) {
   }
   // 计算所有对象的信息
   function calculateInfo () {
-    var items = []
+    let items = []
     idList.forEach(e => {
-      var dom = document.getElementById(e)
-      var obj = {
+      let dom = document.getElementById(e)
+      let obj = {
         id: e,
         dom: dom,
         width: dom.offsetWidth,

@@ -10,9 +10,8 @@
  * @param {Function} overFunc 框选结束后的回调函数
  * @param {Number} maxIndex 框选过程中，遮罩层临时提高的层级值，默认为999
  */
-
-var MultiSelection = function (boxId, itemClassName, selClassName, overFunc, maxIndex) {
-  var newObj = {
+let AjDivSelector = function (boxId, itemClassName, selClassName, overFunc, maxIndex) {
+  let newObj = {
     box: null,
     boxIndex: 1,
     rects: [],
@@ -38,30 +37,29 @@ var MultiSelection = function (boxId, itemClassName, selClassName, overFunc, max
       this.selDiv.style.top = this.selRect.y1 + 'px'
     },
     addListener () {
-      var model = this
-      this.box.addEventListener('mousedown', function (e) {
+      this.box.addEventListener('mousedown', e => {
         // 阻止事件冒泡
         clearEventBubble(e)
         // 判断是否为鼠标左键被按下
         if (e.buttons !== 1 || e.which !== 1) return
-        model.boxIndex = $('#' + boxId).css('z-index')
-        model.box.style.zIndex = maxIndex || 999
-        model.mousedownFunc(e)
+        this.boxIndex = getComputedStyle(this.box, null).getPropertyValue('z-index')
+        this.box.style.zIndex = maxIndex || 999
+        this.mousedownFunc(e)
       })
 
-      this.box.addEventListener('mousemove', function (e) {
-        if (!model.isMouseDown) return
+      this.box.addEventListener('mousemove', e => {
+        if (!this.isMouseDown) return
         clearEventBubble(e)
-        model.mousemoveFunc(e)
+        this.mousemoveFunc(e)
       })
 
-      document.addEventListener('mouseup', function (e) {
+      document.addEventListener('mouseup', e => {
         // console.log('mouseup')
-        if (!model.isMouseDown) return
+        if (!this.isMouseDown) return
         clearEventBubble(e)
 
-        model.box.style.zIndex = model.boxIndex
-        model.mouseupFunc(e)
+        this.box.style.zIndex = this.boxIndex
+        this.mouseupFunc(e)
       })
     },
     mousedownFunc (e) {
@@ -71,9 +69,8 @@ var MultiSelection = function (boxId, itemClassName, selClassName, overFunc, max
     },
     mousemoveFunc (e) {
       // 获取当前坐标
-      var _x = e.clientX
-      var _y = e.clientY
-      // console.log($(document).scrollTop())
+      let _x = e.clientX
+      let _y = e.clientY
       // 根据坐标给选框修改样式
       this.selDiv.style.display = 'block'
       this.selDiv.style.left = Math.min(_x, this.selRect.x1) + 'px'
@@ -92,33 +89,35 @@ var MultiSelection = function (boxId, itemClassName, selClassName, overFunc, max
     },
     getRects () {
       this.rects = []
-      var items = $('.' + itemClassName)
-      var scrollTop = $(document).scrollTop()
-      var scrollLeft = $(document).scrollLeft()
-      for (var i = 0; i < items.size(); i++) {
-        var box = items.eq(i)
-        var left = box.offset().left - scrollLeft
-        var top = box.offset().top - scrollTop
-        var obj = {
-          id: box[0].id,
-          x1: left,
-          y1: top,
-          x2: left + box[0].offsetWidth,
-          y2: top + box[0].offsetHeight
+      let items = document.querySelectorAll('.' + itemClassName)
+      let scrollTop = document.documentElement.scrollTop
+      let scrollLeft = document.documentElement.scrollLeft
+      items.forEach(box => {
+        var target = {
+          left: box.offsetLeft,
+          top: box.offsetTop
+        }
+        this.getDocumentPosition(target, box)
+        let obj = {
+          id: box.id,
+          x1: target.left - scrollLeft,
+          y1: target.top - scrollTop,
+          x2: target.left - scrollLeft + box.offsetWidth,
+          y2: target.top - scrollTop + box.offsetHeight
         }
         this.rects.push(obj)
-      }
+      })
       // console.log(this.rects)
     },
     getSelected () {
       this.selected = []
       this.rects.forEach(e => {
-        var dom = $('#' + e.id)
-        dom.removeClass(selClassName)
-        var flag = this.isCross(e, this.selRect)
+        let dom = document.querySelector('#' + e.id)
+        dom.classList.remove(selClassName)
+        let flag = this.isCross(e, this.selRect)
         if (flag) {
           this.selected.push(e.id)
-          dom.addClass(selClassName)
+          dom.classList.add(selClassName)
         }
       })
       if (this.selected.length) {
@@ -127,20 +126,28 @@ var MultiSelection = function (boxId, itemClassName, selClassName, overFunc, max
     },
     isCross (rect1, rect2) {
       if (rect2.x1 > rect2.x2) {
-        var x = rect2.x1
+        let x = rect2.x1
         rect2.x1 = rect2.x2
         rect2.x2 = x
       }
       if (rect2.y1 > rect2.y2) {
-        var y = rect2.y1
+        let y = rect2.y1
         rect2.y1 = rect2.y2
         rect2.y2 = y
       }
-      var xNotCross = true// x方向上不重合
-      var yNotCross = true// y方向上不重合
+      let xNotCross = true// x方向上不重合
+      let yNotCross = true// y方向上不重合
       xNotCross = ((rect1.x1 > rect2.x2) || (rect2.x1 > rect1.x2))
       yNotCross = ((rect1.y1 > rect2.y2) || (rect2.y1 > rect1.y2))
       return !(xNotCross || yNotCross)
+    },
+    getDocumentPosition (target, box) {
+      if (box !== document.body) {
+        let parent = box.offsetParent
+        target.left += parent.offsetLeft
+        target.top += parent.offsetTop
+        this.getDocumentPosition(target, parent)
+      }
     }
   }
   return newObj

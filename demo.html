@@ -3,8 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <title></title>
-  <link rel="stylesheet" type="text/css" href="css/demo.css">
+  <title>框选对齐</title>
 </head>
 
 <body>
@@ -24,13 +23,126 @@
   </div>
 </body>
 </html>
-<script type="text/javascript" src="js/jquery.min.js"></script>
-<script type="text/javascript" src="js/MultiSelection.js"></script>
-<script type="text/javascript" src="js/multiAlign.js"></script>
-<script type="text/javascript" src="js/demo.js"></script>
+<script type="text/javascript" src="js/AjDivSelector.js"></script>
+<script type="text/javascript" src="js/AjMultiAlign.js"></script>
 <script type="text/javascript">
 window.onload = function () {
-  var sel = new MultiSelection('app', 'box', 'sel', overFunc)
+  var sel = new AjDivSelector('app', 'box', 'sel', overFunc)
   sel.init()
 }
+window.selected = []
+let overFunc = function (arr) {
+  window.selected = arr
+  console.log(arr)
+}
+let buttons = document.getElementsByTagName('button')
+buttons[0].onclick = function () {
+  AjMultiAlign(window.selected, 'left')
+}
+buttons[1].onclick = function () {
+  AjMultiAlign(window.selected, 'right')
+}
+buttons[2].onclick = function () {
+  AjMultiAlign(window.selected, 'top')
+}
+buttons[3].onclick = function () {
+  AjMultiAlign(window.selected, 'bottom')
+}
+buttons[4].onclick = function () {
+  AjMultiAlign(window.selected, 'center')
+}
+buttons[5].onclick = function () {
+  AjMultiAlign(window.selected, 'middle')
+}
+buttons[6].onclick = function () {
+  AjMultiAlign(window.selected, 'horizontal')
+}
+buttons[7].onclick = function () {
+  AjMultiAlign(window.selected, 'vertical')
+}
 </script>
+<style>
+  html {
+  width: 100%;
+  height: 100%;
+}
+body {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin: 0px;
+  padding: 0px;
+}
+button{
+  position: absolute;
+  left:20px;
+}
+button:nth-child(1){
+  top:20px;
+}
+button:nth-child(2){
+  top:60px;
+}
+button:nth-child(3){
+  top:100px;
+}
+button:nth-child(4){
+  top:140px;
+}
+button:nth-child(5){
+  top:180px;
+}
+button:nth-child(6){
+  top:220px;
+}
+button:nth-child(7){
+  top:260px;
+}
+button:nth-child(8){
+  top:300px;
+}
+.main {
+  position: relative;
+  width:750px;
+  height:1200px;
+  margin:20px 0 0 150px;
+  border:2px solid #ccc;
+  z-index: 1;
+}
+.box {
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  border:4px solid #66f;
+}
+.box.sel {
+  border:4px solid #ff0000;
+}
+.box:nth-child(1) {
+  top:60px;
+  left:60px;
+  width: 30px;
+  height: 60px;
+}
+.box:nth-child(2) {
+  top:200px;
+  left:180px;
+}
+.box:nth-child(3) {
+  top:300px;
+  left:500px;
+  width:40px;
+}
+.box:nth-child(4) {
+  top:500px;
+  left:200px;
+  width:60px;
+}
+.sel-div{
+  position: absolute;
+  border:1px solid #66f;
+  background: rgba(97, 160, 241, 0.5);
+}
+</style>
+
+  
