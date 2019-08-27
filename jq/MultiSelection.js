@@ -7,7 +7,7 @@
  * @param {String} boxId 遮罩层的ID
  * @param {String} itemClassName 选项的CLASS
  * @param {String} selClassName 选项选中后添加的样式CLASS
- * @param {Object,Function} callback 回调函数，包含mousedown执行的mousedownFunc，框选结束后执行的mousedownFunc
+ * @param {Object{Function,Function}} callback 回调函数，包含mousedown执行的mousedownFunc，框选结束后执行的mousedownFunc
  * @param {Number} maxIndex 框选过程中，遮罩层临时提高的层级值，默认为999
  */
 

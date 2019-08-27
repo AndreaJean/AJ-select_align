@@ -19,7 +19,7 @@ sel.init()
 * boxId {String} 遮罩层的ID
 * itemClassName {String} 选项的CLASS
 * selClassName {String} 选项选中后添加的样式CLASS
-* overFunc {Function} 框选结束后的回调函数，参数为选中dom的id数组
+* callback {Object{Function,Function}} 回调函数，包含mousedown执行的mousedownFunc，框选结束后执行的mousedownFunc
 * maxIndex {Number} 框选过程中，遮罩层临时提高的层级值，默认为999
 
 
